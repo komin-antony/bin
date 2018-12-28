@@ -1,6 +1,6 @@
-workflow "Build and Publish" {
+workflow "Build" {
   on = "push"
-  resolves = "Publish"
+  resolves = "Build"
 }
 
 action "Lint" {
@@ -22,20 +22,3 @@ action "Build" {
   args = "build"
 }
 
-action "Publish Filter" {
-  needs = ["Build"]
-  uses = "actions/bin/filter@master"
-  args = "branch master"
-}
-
-action "Docker Login" {
-  needs = ["Publish Filter"]
-  uses = "actions/docker/login@master"
-}
-
-action "Publish" {
-  needs = ["Docker Login"]
-  uses = "actions/action-builder/docker@master"
-  runs = "make"
-  args = "publish"
-}
