@@ -21,4 +21,3 @@ action "Build" {
   runs = "make"
   args = "build"
 }
-
